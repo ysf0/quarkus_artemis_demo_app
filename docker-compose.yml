@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  artemis:
+    image: vromero/activemq-artemis:2.15.0-alpine
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+    environment:
+      - "BROKER_CONFIG_MAX_DISK_USAGE=100"
+  quarkus_demo_app:
+    image: quarkus/quarkus_artemis_demo_app-jvm
+    ports:
+      - "8080:8080"
+    depends_on:
+      - artemis
+    links:
+      - artemis
